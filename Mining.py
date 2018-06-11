@@ -7,7 +7,7 @@ import datetime
 # Welcome text
 print("")
 print("|---------------------------------------|")
-print("|  MagicStats v0.0.2 by Matz Trollmann  |")
+print("|  MagicStats v0.0.3 by Matz Trollmann  |")
 print("|---------------------------------------|")
 print("")
 
@@ -19,6 +19,7 @@ dailyprod = block24h * reward
 
 # User options
 mining = float(input("Input your expected hashrate in MH/s: "))
+wallet = str(input("Input your wallet address here: "))
 
 # Static variables
 gh = 1000000000
@@ -32,7 +33,7 @@ while True :
     # Gets API data
     url = "https://api.coinmarketcap.com/v2/ticker/2773/"
     ginresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
-    poolurl = "http://angrypool.com/api/walletEx?address=GW8vqADFpd1TDZh5kd89CpF3yLpRBtPUG5"
+    poolurl = f"http://angrypool.com/api/walletEx?address={wallet}"
     # Calculations from API data from coin block explorer
     ginhash = float(ginresp.text)
     perchash = round(mining * gh / ginhash / 10,5)
@@ -48,7 +49,7 @@ while True :
     data = poolresponse.text
     parsed = json.loads(data)
     total24htext = parsed['total']
-    last24h = round(total24htext,5)
+    last24h = round(total24htext,4)
     # Prints data to screen on chosen interval
     print(today,'The current hashrate for',gin,'is',round(ginhash / gh,4),'GH/s.')
     print(today,"Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
