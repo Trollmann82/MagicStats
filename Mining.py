@@ -47,4 +47,4 @@ while True :
     print(today,"Expected daily production is currently",dailycoins,gin,"per day, at an estimated value of",round(price*dailycoins,2),"USD.")
     print(today,"-----     -----     -----     -----     -----     -----     -----     -----     -----     -----")
 
-    time.sleep(60)
+    time.sleep(300)
