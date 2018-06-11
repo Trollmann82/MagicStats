@@ -6,9 +6,11 @@ import datetime
 
 # Welcome text
 print("")
-print("|---------------------------------------|")
-print("|  MagicStats v0.0.4 by Matz Trollmann  |")
-print("|---------------------------------------|")
+print("|-------------------------------------------|")
+print("|    MagicStats v0.0.5 by Matz Trollmann    |")
+print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
+print("|  Github: https://github.com/Trollmann82/  |")
+print("|-------------------------------------------|")
 print("")
 
 # Blockchain data
@@ -33,6 +35,18 @@ if poolchoice == 2:
     pool = f"http://api.bsod.pw/api/walletEx?address="
     poolname = str("Bsod")
 
+# Choosing fiat currency
+print("1 = USD\n"
+      "2 = EUR\n"
+      "3 = SEK")
+fiatchoice = int(input("Choose fiat currency: "))
+if fiatchoice == 1:
+    fiatcurr = str("USD")
+if fiatchoice == 2:
+    fiatcurr = str("EUR")
+if fiatchoice == 3:
+    fiatcurr = str("SEK")
+
 # Static variables
 gh = 1000000000
 mh = 1000000
@@ -43,15 +57,21 @@ gin = 'Gincoin'
 while True :
 
     # Gets API data
-    url = "https://api.coinmarketcap.com/v2/ticker/2773/"
+    fiatapi = f"https://free.currencyconverterapi.com/api/v5/convert?q=USD_{fiatcurr}&compact=ultra"
+    cryptoapi = "https://api.coinmarketcap.com/v2/ticker/2773/"
     ginresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
     poolurl = f"{pool}{wallet}"
     # Calculations from API data from coin block explorer
     ginhash = float(ginresp.text)
     perchash = round(mining * gh / ginhash / 10,5)
     dailycoins = round(dailyprod * perchash / 100, 4)
+    # Calculations for fiat currency API data
+    fiatresponse = requests.get(fiatapi)
+    fiatdata = fiatresponse.text
+    fiatparsed = json.loads(fiatdata)
+    fiat = fiatparsed[f"USD_{fiatcurr}"]
     # Calculations from API data from Coinmarketcap
-    response = requests.get(url)
+    response = requests.get(cryptoapi)
     data = response.text
     parsed = json.loads(data)
     price = parsed["data"]["quotes"]["USD"]["price"]
@@ -62,12 +82,12 @@ while True :
     parsed = json.loads(data)
     total24htext = parsed['total']
     last24h = round(total24htext,4)
-    # Prints data to screen on chosen interval
-    print(today,"You are currently mining on",poolname,"on the address",wallet,".")
+    # Prints data to screen every 5 minutes
+    print(today," You are currently mining on ",poolname," on the address ", wallet,".",sep='')
     print(today,'The current hashrate for',gin,'is',round(ginhash / gh,4),'GH/s.')
     print(today,"Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
-    print(today,"Expected daily production is currently",dailycoins,gin,"per day, at an estimated value of",round(price*dailycoins,2),"USD.")
-    print(today,"You have mined",last24h,gin,"in the last 24 hours for a total value of",round(price*last24h,2),"USD")
+    print(today," Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ", round(price*dailycoins*fiat,2)," ",fiatcurr,".",sep='')
+    print(today,"You have mined",last24h,gin,"in the last 24 hours for a total value of",round(price*last24h*fiat,2),fiatcurr)
     print(today, "-----     -----     -----     -----     -----     -----     -----     -----     -----     -----")
     time.sleep(300)
 
