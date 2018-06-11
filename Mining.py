@@ -5,9 +5,9 @@ import datetime
 
 # Welcome text
 print("")
-print("|---------------------------------------|")
-print("|  MagicStats v0.0.1 by Matz Trollmann  |")
-print("|---------------------------------------|")
+print("|-----------------------------------------|")
+print("|  MagicStats v0.0.1.1 by Matz Trollmann  |")
+print("|-----------------------------------------|")
 print("")
 
 # Blockchain data
@@ -18,7 +18,6 @@ dailyprod = block24h * reward
 
 # User options
 mining = float(input("Input your expected hashrate in MH/s: "))
-sleeptime = int(input("Input your request interval in minutes: "))
 
 # Static variables
 gh = 1000000000
@@ -48,4 +47,4 @@ while True :
     print(today,"Expected daily production is currently",dailycoins,gin,"per day, at an estimated value of",round(price*dailycoins,2),"USD.")
     print(today,"-----     -----     -----     -----     -----     -----     -----     -----     -----     -----")
 
-    time.sleep(sleeptime*60)
+    time.sleep(60)
