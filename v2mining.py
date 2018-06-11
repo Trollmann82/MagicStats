@@ -55,6 +55,7 @@ mh = 1000000
 kh = 1000
 gin = 'Gincoin'
 
+os.system('clear')
 # Code to loop
 while True :
 
