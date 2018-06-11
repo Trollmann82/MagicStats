@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|  MagicStats v0.0.5.5v2 by Matz Trollmann  |")
+print("|   MagicStats v0.1.0v2 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -85,6 +85,7 @@ while True :
     parsed = json.loads(data)
     total24htext = parsed['total']
     last24h = round(total24htext,4)
+    time.sleep(5)
     os.system('clear')
     # Prints data to screen every 5 minutes
     print("")
