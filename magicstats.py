@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.2.1 by Matz Trollmann    |")
+print("|    MagicStats v0.2.2 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -109,7 +109,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.2.1 by Matz Trollmann    |")
+    print("|    MagicStats v0.2.2 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  Github: https://github.com/Trollmann82/  |")
     print("|-------------------------------------------|")
@@ -122,8 +122,9 @@ while True :
     if poolchoice == 1 or poolchoice == 2:
         print("You have mined",last24h,gin,"in the last 24 hours for a total value of",round(price*last24h*fiat,2),fiatcurr)
     if poolchoice == 3:
-        dailyblocks = round(dailycoins / reward, 3)
-        print("You will mine an estimated",dailyblocks,"blocks per day, or recieve a block every",round(24 / dailyblocks,2),"hours.")
+        dailyblocks = float(round(dailycoins / reward,4))
+        avghours = str(datetime.timedelta(seconds = round(86400 / dailyblocks)))
+        print("You will mine an estimated",dailyblocks,"blocks per day, or recieve a block every",avghours)
 
     time.sleep(295)
 
