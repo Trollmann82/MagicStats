@@ -1,0 +1,9 @@
+import json
+import requests
+
+cointicker = 'https://api.crypto-bridge.org/api/v1/ticker'
+coinresponse = requests.get(cointicker)
+coindata = coinresponse.text
+coinparsed = json.loads(coindata)
+btcprice = coinparsed["id"]["GIN_BTC"]["last"]
+print(btcprice)
