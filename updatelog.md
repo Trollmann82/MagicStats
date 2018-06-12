@@ -1,3 +1,7 @@
+v0.2.1
+
+Added pretty much all fiat currencies.
+
 v0.2.0
 
 Added screen behaviour options.
