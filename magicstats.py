@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.2.2 by Matz Trollmann    |")
+print("|   MagicStats v0.2.2.1 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -103,13 +103,17 @@ while True :
         parsed = json.loads(data)
         total24htext = parsed['total']
         last24h = round(total24htext,4)
+    #Average blocks per day
+    dailyblocks = float(round(dailycoins / reward, 4))
+    avghours = str(datetime.timedelta(seconds=round(86400 / dailyblocks)))
+    #Pause to update data
     time.sleep(5)
     if screenchoice == 1:
         os.system('clear')
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.2.2 by Matz Trollmann    |")
+    print("|   MagicStats v0.2.2.1 by Matz Trollmann   |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  Github: https://github.com/Trollmann82/  |")
     print("|-------------------------------------------|")
@@ -119,12 +123,8 @@ while True :
     print("The current hashrate for",gin,"is",round(ginhash / gh,4),"GH/s.")
     print("Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
     print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ", round(price*dailycoins*fiat,2)," ",fiatcurr,".",sep='')
+    print("Your hashrate will yield an estimated", dailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
         print("You have mined",last24h,gin,"in the last 24 hours for a total value of",round(price*last24h*fiat,2),fiatcurr)
-    if poolchoice == 3:
-        dailyblocks = float(round(dailycoins / reward,4))
-        avghours = str(datetime.timedelta(seconds = round(86400 / dailyblocks)))
-        print("You will mine an estimated",dailyblocks,"blocks per day, or recieve a block every",avghours)
-
     time.sleep(295)
 
