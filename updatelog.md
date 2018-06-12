@@ -1,3 +1,7 @@
+v0.2.2.1
+
+Added average time per found block.
+
 v0.2.1
 
 Added pretty much all fiat currencies.
