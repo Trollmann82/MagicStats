@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.2.0 by Matz Trollmann    |")
+print("|    MagicStats v0.2.1 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -39,21 +39,32 @@ if poolchoice == 2:
 if poolchoice == 3:
     pool = str("")
     poolname = str("solo mining")
+
 # Screen choice menu
 print("1 = Clear screen on every update (good for tidy information)\n"
     "2 = Rolling data (good for being able to see historical data)")
 screenchoice = int(input("Choose behaviour: "))
+
 # Choosing fiat currency
 print("1 = USD\n"
       "2 = EUR\n"
-      "3 = SEK")
+      "3 = GBP\n"
+      "4 = SEK\n"
+      "5 = NOK\n"
+      "6 = Manual input option")
 fiatchoice = int(input("Choose fiat currency: "))
 if fiatchoice == 1:
     fiatcurr = str("USD")
 if fiatchoice == 2:
     fiatcurr = str("EUR")
 if fiatchoice == 3:
+    fiatcurr = str("GBP")
+if fiatchoice == 4:
     fiatcurr = str("SEK")
+if fiatchoice == 5:
+    fiatcurr = str("NOK")
+if fiatchoice == 6:
+    fiatcurr = str(input("Type a correct international currency abbreviation (USD, EUR, GBP etc) in capital letters: "))
 
 # Static variables
 gh = 1000000000
@@ -98,7 +109,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.2.0 by Matz Trollmann    |")
+    print("|    MagicStats v0.2.1 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  Github: https://github.com/Trollmann82/  |")
     print("|-------------------------------------------|")
