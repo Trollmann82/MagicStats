@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|   MagicStats v0.2.2.1 by Matz Trollmann   |")
+print("|   MagicStats v0.2.2.5 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -39,6 +39,10 @@ if poolchoice == 2:
 if poolchoice == 3:
     pool = str("")
     poolname = str("solo mining")
+
+# Coin choice menu
+#print("1 = Gincoin\n"
+#      "2 = ")
 
 # Screen choice menu
 print("1 = Clear screen on every update (good for tidy information)\n"
@@ -76,14 +80,26 @@ os.system('clear')
 # Code to loop
 while True :
 
-    # Gets API data
+    # Gets API data for fiat currency and sets pool address
     fiatapi = f"https://free.currencyconverterapi.com/api/v5/convert?q=USD_{fiatcurr}&compact=ultra"
-    cryptoapi = "https://api.coinmarketcap.com/v2/ticker/2773/"
-    ginresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
     poolurl = f"{pool}{wallet}"
+    # Gets API data for Gincoin
+    cryptoapi = "https://api.crypto-bridge.org/api/v1/ticker"
+    cryptoresp = requests.get(cryptoapi)
+    coindata = cryptoresp.text
+    coinparsed = json.loads(coindata)
+    for i in coinparsed:
+        if i['id'] == 'GIN_BTC':
+            cryptoprice = (i)['last']
+            cryptofloat = float(cryptoprice)
+            break
+
+
+    nethashresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
+
     # Calculations from API data from coin block explorer
-    ginhash = float(ginresp.text)
-    perchash = round(mining * gh / ginhash / 10,5)
+    nethash = float(nethashresp.text)
+    perchash = round(mining * gh / nethash / 10,5)
     dailycoins = round(dailyprod * perchash / 100, 4)
     # Calculations for fiat currency API data
     fiatresponse = requests.get(fiatapi)
@@ -91,8 +107,8 @@ while True :
     fiatparsed = json.loads(fiatdata)
     fiat = fiatparsed[f"USD_{fiatcurr}"]
     # Calculations from API data from Coinmarketcap
-    response = requests.get(cryptoapi)
-    data = response.text
+    cmcresponse = requests.get("https://api.coinmarketcap.com/v2/ticker/2773")
+    data = cmcresponse.text
     parsed = json.loads(data)
     price = parsed["data"]["quotes"]["USD"]["price"]
     today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -113,18 +129,18 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|   MagicStats v0.2.2.1 by Matz Trollmann   |")
+    print("|   MagicStats v0.2.2.5 by Matz Trollmann   |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  Github: https://github.com/Trollmann82/  |")
     print("|-------------------------------------------|")
     print("")
     print(today)
     print("You are currently ",poolname," on the address ", wallet,".",sep='')
-    print("The current hashrate for",gin,"is",round(ginhash / gh,4),"GH/s.")
+    print("The current hashrate for",gin,"is",round(nethash / gh,4),"GH/s.")
     print("Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
-    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ", round(price*dailycoins*fiat,2)," ",fiatcurr,".",sep='')
+    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ",round(price*dailycoins*fiat,2)," ",fiatcurr," or ",round(cryptofloat*dailycoins,8)," Bitcoin.",sep='')
     print("Your hashrate will yield an estimated", dailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
-        print("You have mined",last24h,gin,"in the last 24 hours for a total value of",round(price*last24h*fiat,2),fiatcurr)
+        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",round(price*last24h*fiat,2)," ",fiatcurr," or ",round(cryptofloat*last24h,8)," Bitcoin.",sep='')
     time.sleep(295)
 
