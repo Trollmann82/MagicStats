@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|   MagicStats v0.2.2.5 by Matz Trollmann   |")
+print("|   MagicStats v0.2.2.6 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  Github: https://github.com/Trollmann82/  |")
 print("|-------------------------------------------|")
@@ -122,6 +122,11 @@ while True :
     #Average blocks per day
     dailyblocks = float(round(dailycoins / reward, 4))
     avghours = str(datetime.timedelta(seconds=round(86400 / dailyblocks)))
+    # BTC value calculation
+    cryptopay = round(cryptofloat * dailycoins, 8)
+    cryptolast24h = round(cryptofloat*last24h,8)
+    cryptoph = round(cryptopay / 24,8)
+    cryptolast24hph = round(cryptolast24h / 24,8)
     #Pause to update data
     time.sleep(5)
     if screenchoice == 1:
@@ -129,7 +134,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|   MagicStats v0.2.2.5 by Matz Trollmann   |")
+    print("|   MagicStats v0.2.2.6 by Matz Trollmann   |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  Github: https://github.com/Trollmann82/  |")
     print("|-------------------------------------------|")
@@ -138,9 +143,9 @@ while True :
     print("You are currently ",poolname," on the address ", wallet,".",sep='')
     print("The current hashrate for",gin,"is",round(nethash / gh,4),"GH/s.")
     print("Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
-    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ",round(price*dailycoins*fiat,2)," ",fiatcurr," or ",round(cryptofloat*dailycoins,8)," Bitcoin.",sep='')
+    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ",round(price*dailycoins*fiat,2)," ",fiatcurr," or ",cryptopay," Bitcoin.","(",cryptoph," BTC/h.)",sep='')
     print("Your hashrate will yield an estimated", dailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
-        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",round(price*last24h*fiat,2)," ",fiatcurr," or ",round(cryptofloat*last24h,8)," Bitcoin.",sep='')
+        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",round(price*last24h*fiat,2)," ",fiatcurr," or ",round(cryptofloat*last24h,8)," Bitcoin.","(",cryptolast24hph," BTC/h.)",sep='')
     time.sleep(295)
 
