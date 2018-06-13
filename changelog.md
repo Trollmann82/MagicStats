@@ -1,3 +1,11 @@
+v0.2.2.8
+
+Minor code cleanup in print functions.
+
+v0.2.2.7
+
+Added Gincoin (GIN) donation address on user request.
+
 v0.2.2.6
 
 Added BTC/hour.
