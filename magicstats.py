@@ -143,9 +143,9 @@ while True :
     print("You are currently ",poolname," on the address ", wallet,".",sep='')
     print("The current hashrate for",gin,"is",round(nethash / gh,4),"GH/s.")
     print("Your expected hashrate of",mining,"MH/s makes out",perchash,"% of the network.")
-    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ",round(price*dailycoins*fiat,2)," ",fiatcurr," or ",cryptopay," Bitcoin.","(",cryptoph," BTC/h.)",sep='')
+    print("Expected daily production is currently ", dailycoins," ",gin," per day, at an estimated value of ",round(price*dailycoins*fiat,2)," ",fiatcurr," or ",cryptopay," Bitcoin. ","(",cryptoph," BTC/h.)",sep='')
     print("Your hashrate will yield an estimated", dailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
-        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",round(price*last24h*fiat,2)," ",fiatcurr," or ",round(cryptofloat*last24h,8)," Bitcoin.","(",cryptolast24hph," BTC/h.)",sep='')
+        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",round(price*last24h*fiat,2)," ",fiatcurr," or ",round(cryptofloat*last24h,8)," Bitcoin. ","(",cryptolast24hph," BTC/h.)",sep='')
     time.sleep(295)
 
