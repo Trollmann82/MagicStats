@@ -1,3 +1,11 @@
+v0.2.2.6
+
+Added BTC/hour.
+
+v0.2.2.5
+
+Added crypto API functions for getting BTC price.
+
 v0.2.2.1
 
 Added average time per found block.
