@@ -42,7 +42,7 @@ while True:
     cbparsed = json.loads(cbdata)
 
     # Gets data for defined coins from CREX24 (address have to be changed to add new coins)
-    crexapi = "https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_ALPS]"
+    crexapi = "https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_ALPS,BTC_CRS]"
     crexresp = requests.get(crexapi)
     crexdata = crexresp.text
     crexparsed = json.loads(crexdata)
@@ -67,7 +67,7 @@ while True:
     alpsnethashresp = requests.get("http://explorer.alpenschilling.cash/api/getnetworkhashps")
     alpsnethash = float(alpsnethashresp.text)
     alpsperchash = round(mining * gh / alpsnethash / 10, 5)
-    alpsailycoins = round(alpsdailyprod * alpsperchash / 100, 4)
+    alpsdailycoins = round(alpsdailyprod * alpsperchash / 100, 4)
     alpsnethashgh = round(alpsnethash / gh, 3)
     alps = str("Alpenschilling")
 
@@ -84,8 +84,8 @@ while True:
             break
 
     # Scrapes CREX24 data
-    for i in crexparsed:
-        if i['PairId'] == 378 :
+    for i in crexparsed['Tickers']:
+        if i['PairName'] == "BTC_CRS":
             alpsprice = (i)['Last']
             alpsfloat = float(alpsprice)
             break
@@ -94,6 +94,8 @@ while True:
     ginph = round(dailygin / 24, 8)
     dailyifx = round(ifxfloat * ifxdailycoins, 8)
     ifxph = round(dailyifx / 24, 8)
+    dailyalps = round(alpsfloat * alpsdailycoins, 8)
+    alpsph = round(dailyalps / 24, 8)
 
     # Print a list of the coins every 5 minutes
     coinlist = [
