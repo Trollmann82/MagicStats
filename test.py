@@ -42,6 +42,12 @@ tlrblock24h = 86400 / tlrblocktimesec
 tlrreward = 50
 tlrdailyprod = tlrblock24h * tlrreward
 
+# Vertical blockchain data
+vtlblocktimesec = 120
+vtlblock24h = 86400 / vtlblocktimesec
+vtlreward = 24
+vtldailyprod = vtlblock24h * vtlreward
+
 while True:
 
     today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -63,6 +69,12 @@ while True:
     csresp = requests.get(csapi)
     csdata = csresp.text
     csparsed = json.loads(csdata)
+
+    # Gets Graviex coin data
+    grvapi = "https://graviex.net//api/v2/tickers.json"
+    grvresp = requests.get(grvapi)
+    grvdata = grvresp.text
+    grvparsed = json.loads(grvdata)
 
     # Gincoin calculations
     ginnethashresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
@@ -109,6 +121,15 @@ while True:
     tlrnethashgh = round(tlrnethash / gh, 3)
     tlr = str("Taler")
 
+    # Vertical Calculations
+
+    vtlnethashresp = requests.get("https://explorer.vertical.ovh/api/getnetworkhashps")
+    vtlnethash = float(vtlnethashresp.text)
+    vtlperchash = round(mining * gh / vtlnethash / 10, 5)
+    vtldailycoins = round(vtldailyprod * vtlperchash / 100, 4)
+    vtlnethashgh = round(vtlnethash / gh, 3)
+    vtl = str("Vertical")
+
     # Scrapes Cryptobridge data
     for i in cbparsed:
         if i['id'] == 'GIN_BTC':
@@ -139,6 +160,7 @@ while True:
       #  tlrfloat = float(tlrprice)
        # break
     tlrprice = float(csparsed["ticker"]["last"])
+    vtlprice = float(grvparsed["vtlbtc"]["ticker"]["last"])
 
     # Calculates data for list
     dailygin = round(ginfloat * gindailycoins, 8)
@@ -153,6 +175,8 @@ while True:
     #ifcrsph = round(ifdailycrs / 24, 8)
     dailytlr = round(tlrprice * tlrdailycoins, 8)
     tlrph = round(dailytlr / 24, 8)
+    dailyvtl = round(vtlprice * vtldailycoins, 8)
+    vtlph = round(dailyvtl / 24, 8)
 
     # Print a list of the coins every 5 minutes
     print(" ",today)
@@ -164,6 +188,7 @@ while True:
         ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12)],
         ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12)],
         ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12), str("%.8f" % tlrph).ljust(12)],
+        ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12), str("%.8f" % vtlph).ljust(12)],
     ]
     coinlist.sort(key=lambda item: item[3],reverse=True)
     for item in coinlist:
