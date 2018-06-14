@@ -10,7 +10,7 @@ mining = float(input("Input your expected hashrate in MH/s: "))
 gh = 1000000000
 mh = 1000000
 kh = 1000
-today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
 
 # Gincoin blockchain data
 ginblocktimesec = 120
@@ -36,7 +36,16 @@ crsblock24h = 86400 / crsblocktimesec
 crsreward = 65
 crsdailyprod = crsblock24h * crsreward
 
+# Taler blockchain data
+tlrblocktimesec = 300
+tlrblock24h = 86400 / tlrblocktimesec
+tlrreward = 50
+tlrdailyprod = tlrblock24h * tlrreward
+
 while True:
+
+    today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     # Gets data for all coins from Cryptobridge
     cbapi = "https://api.crypto-bridge.org/api/v1/ticker"
     cbresp = requests.get(cbapi)
@@ -48,6 +57,12 @@ while True:
     crexresp = requests.get(crexapi)
     crexdata = crexresp.text
     crexparsed = json.loads(crexdata)
+
+    # Gets Coinstock.me Taler coin data
+    csapi = "https://coinstock.me//api/v2/tickers/tlrbtc.json"
+    csresp = requests.get(csapi)
+    csdata = csresp.text
+    csparsed = json.loads(csdata)
 
     # Gincoin calculations
     ginnethashresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
@@ -85,6 +100,15 @@ while True:
     #ifcrsnethashgh = round(ifcrsnethash / gh, 3)
     crs = str("Alpenschilling")
 
+    # Taler Calculations
+
+    tlrnethashresp = requests.get("http://taler-explorer.online/api/getnetworkhashps")
+    tlrnethash = float(tlrnethashresp.text)
+    tlrperchash = round(mining * gh / tlrnethash / 10, 5)
+    tlrdailycoins = round(tlrdailyprod * tlrperchash / 100, 4)
+    tlrnethashgh = round(tlrnethash / gh, 3)
+    tlr = str("Taler")
+
     # Scrapes Cryptobridge data
     for i in cbparsed:
         if i['id'] == 'GIN_BTC':
@@ -109,6 +133,13 @@ while True:
             crsfloat = float(crsprice)
             break
 
+    # Scrapes Coinstock.me data
+    #for i in csparsed:
+     #   tlrprice = (i)['last']
+      #  tlrfloat = float(tlrprice)
+       # break
+    tlrprice = float(csparsed["ticker"]["last"])
+
     # Calculates data for list
     dailygin = round(ginfloat * gindailycoins, 8)
     ginph = round(dailygin / 24, 8)
@@ -120,6 +151,8 @@ while True:
     #ifdailycrs = round(crsfloat * ifcrsdailycoins, 8)
     crsph = round(dailycrs / 24, 8)
     #ifcrsph = round(ifdailycrs / 24, 8)
+    dailytlr = round(tlrprice * tlrdailycoins, 8)
+    tlrph = round(dailytlr / 24, 8)
 
     # Print a list of the coins every 5 minutes
     print(" ",today)
@@ -130,6 +163,7 @@ while True:
         ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12), str("%.8f" % ifxph).ljust(12)],
         ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12)],
         ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12)],
+        ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12), str("%.8f" % tlrph).ljust(12)],
     ]
     coinlist.sort(key=lambda item: item[3],reverse=True)
     for item in coinlist:
