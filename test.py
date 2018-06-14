@@ -1,6 +1,7 @@
 import requests
 import json
 import time
+import datetime
 
 # User options
 mining = float(input("Input your expected hashrate in MH/s: "))
@@ -9,6 +10,7 @@ mining = float(input("Input your expected hashrate in MH/s: "))
 gh = 1000000000
 mh = 1000000
 kh = 1000
+today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
 # Gincoin blockchain data
 ginblocktimesec = 120
@@ -71,6 +73,14 @@ while True:
     alpsnethashgh = round(alpsnethash / gh, 3)
     alps = str("Alpenschilling")
 
+    # Criptoreal Calculations
+    crsnethashresp = requests.get("https://criptoreal.info/api/getnetworkhashps")
+    crsnethash = float(crsnethashresp.text)
+    crsperchash = round(mining * gh / crsnethash / 10, 5)
+    crsdailycoins = round(crsdailyprod * crsperchash / 100, 4)
+    crsnethashgh = round(crsnethash / gh, 3)
+    crs = str("Alpenschilling")
+
     # Scrapes Cryptobridge data
     for i in cbparsed:
         if i['id'] == 'GIN_BTC':
@@ -85,28 +95,40 @@ while True:
 
     # Scrapes CREX24 data
     for i in crexparsed['Tickers']:
-        if i['PairName'] == "BTC_CRS":
+        if i['PairName'] == "BTC_ALPS":
             alpsprice = (i)['Last']
             alpsfloat = float(alpsprice)
             break
+    for i in crexparsed['Tickers']:
+        if i['PairName'] == "BTC_CRS":
+            crsprice = (i)['Last']
+            crsfloat = float(crsprice)
+            break
 
+    # Calculates data for list
     dailygin = round(ginfloat * gindailycoins, 8)
     ginph = round(dailygin / 24, 8)
     dailyifx = round(ifxfloat * ifxdailycoins, 8)
     ifxph = round(dailyifx / 24, 8)
     dailyalps = round(alpsfloat * alpsdailycoins, 8)
     alpsph = round(dailyalps / 24, 8)
+    dailycrs = round(crsfloat * crsdailycoins, 8)
+    crsph = round(dailycrs / 24, 8)
 
     # Print a list of the coins every 5 minutes
+    print(" ",today)
+    print("----------------------------------------------------------------------")
     coinlist = [
         ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "Mined/hour".ljust(12)],
         ["Gincoin".ljust(20), "{:.3f}".format(ginnethashgh).ljust(13), str("%.8f" % ginfloat).ljust(12), str("%.8f" % ginph).ljust(12)],
-        ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12), str("%.8f" % ifxph).ljust(12)]
+        ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12), str("%.8f" % ifxph).ljust(12)],
         ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12)],
+        ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12)],
     ]
     for item in coinlist:
         print("|", item[0], "|",
             item[1], "|",
             item[2], "|",
             item[3], "|")
+    print("----------------------------------------------------------------------")
     time.sleep(300)
