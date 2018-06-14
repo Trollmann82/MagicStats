@@ -76,9 +76,13 @@ while True:
     # Criptoreal Calculations
     crsnethashresp = requests.get("https://criptoreal.info/api/getnetworkhashps")
     crsnethash = float(crsnethashresp.text)
+    #ifcrsnethash = crsnethash + (mining * mh)
     crsperchash = round(mining * gh / crsnethash / 10, 5)
+    #ifcrsperchash = round(mining * gh / ifcrsnethash / 10,5)
     crsdailycoins = round(crsdailyprod * crsperchash / 100, 4)
+    #ifcrsdailycoins = round(crsdailyprod * ifcrsperchash / 100, 4)
     crsnethashgh = round(crsnethash / gh, 3)
+    #ifcrsnethashgh = round(ifcrsnethash / gh, 3)
     crs = str("Alpenschilling")
 
     # Scrapes Cryptobridge data
@@ -113,7 +117,9 @@ while True:
     dailyalps = round(alpsfloat * alpsdailycoins, 8)
     alpsph = round(dailyalps / 24, 8)
     dailycrs = round(crsfloat * crsdailycoins, 8)
+    #ifdailycrs = round(crsfloat * ifcrsdailycoins, 8)
     crsph = round(dailycrs / 24, 8)
+    #ifcrsph = round(ifdailycrs / 24, 8)
 
     # Print a list of the coins every 5 minutes
     print(" ",today)
@@ -125,6 +131,7 @@ while True:
         ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12)],
         ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12)],
     ]
+    coinlist.sort(key=lambda item: item[3],reverse=True)
     for item in coinlist:
         print("|", item[0], "|",
             item[1], "|",
