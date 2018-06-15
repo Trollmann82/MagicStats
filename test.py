@@ -134,11 +134,15 @@ while True:
     for i in cbparsed:
         if i['id'] == 'GIN_BTC':
             ginprice = (i)['last']
+            ginvolumetext = (i)['volume']
+            ginvolume = float(ginvolumetext)
             ginfloat = float(ginprice)
             break
     for i in cbparsed:
         if i['id'] == 'IFX_BTC':
             ifxprice = (i)['last']
+            ifxvolumetext = (i)['volume']
+            ifxvolume = float(ifxvolumetext)
             ifxfloat = float(ifxprice)
             break
 
@@ -146,11 +150,15 @@ while True:
     for i in crexparsed['Tickers']:
         if i['PairName'] == "BTC_ALPS":
             alpsprice = (i)['Last']
+            alpsvolumetext = (i)['BaseVolume']
+            alpsvolume = float(alpsvolumetext)
             alpsfloat = float(alpsprice)
             break
     for i in crexparsed['Tickers']:
         if i['PairName'] == "BTC_CRS":
             crsprice = (i)['Last']
+            crsvolumetext = (i)['BaseVolume']
+            crsvolume = float(crsvolumetext)
             crsfloat = float(crsprice)
             break
 
@@ -160,7 +168,9 @@ while True:
       #  tlrfloat = float(tlrprice)
        # break
     tlrprice = float(csparsed["ticker"]["last"])
+    tlrvolume = float(csparsed["ticker"]["volbtc"])
     vtlprice = float(grvparsed["vtlbtc"]["ticker"]["last"])
+    vtlvolume = float(grvparsed["vtlbtc"]["ticker"]["volbtc"])
 
     # Calculates data for list
     dailygin = round(ginfloat * gindailycoins, 8)
@@ -180,21 +190,22 @@ while True:
 
     # Print a list of the coins every 5 minutes
     print(" ",today)
-    print("----------------------------------------------------------------------")
+    print("---------------------------------------------------------------------------------------")
     coinlist = [
-        ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "Mined/hour".ljust(12)],
-        ["Gincoin".ljust(20), "{:.3f}".format(ginnethashgh).ljust(13), str("%.8f" % ginfloat).ljust(12), str("%.8f" % ginph).ljust(12)],
-        ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12), str("%.8f" % ifxph).ljust(12)],
-        ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12)],
-        ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12)],
-        ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12), str("%.8f" % tlrph).ljust(12)],
-        ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12), str("%.8f" % vtlph).ljust(12)],
+        ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "BTC/hour".ljust(12),"24h BTC Volume".ljust(14)],
+        ["Gincoin".ljust(20), "{:.3f}".format(ginnethashgh).ljust(13), str("%.8f" % ginfloat).ljust(12), str("%.8f" % ginph).ljust(12),str("%.8f" % ginvolume).ljust(14)],
+        ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12), str("%.8f" % ifxph).ljust(12),str("%.8f" % ifxvolume).ljust(14)],
+        ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12), str("%.8f" % alpsph).ljust(12),str("%.8f" % alpsvolume).ljust(14)],
+        ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12), str("%.8f" % crsph).ljust(12),str("%.8f" % crsvolume).ljust(14)],
+        ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12), str("%.8f" % tlrph).ljust(12),str("%.8f" % tlrvolume).ljust(14)],
+        ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12), str("%.8f" % vtlph).ljust(12),str("%.8f" % vtlvolume).ljust(14)],
     ]
     coinlist.sort(key=lambda item: item[3],reverse=True)
     for item in coinlist:
         print("|", item[0], "|",
             item[1], "|",
             item[2], "|",
-            item[3], "|")
-    print("----------------------------------------------------------------------")
+            item[3], "|",
+            item[4], "|")
+    print("---------------------------------------------------------------------------------------")
     time.sleep(300)
