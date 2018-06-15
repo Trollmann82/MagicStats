@@ -1,3 +1,9 @@
+v0.3.0
+Internal variable changes.
+Cleaned up API functions.
+Added a self-sorting coin list to show the most profitable coins to mine currently.
+Confused myself many times.
+
 v0.2.2.8
 
 Minor code cleanup in print functions.
