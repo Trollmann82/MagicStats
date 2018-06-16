@@ -1,7 +1,9 @@
 v0.3.1
+
 Added current wallet balance.
 
 v0.3.0
+
 Internal variable changes.
 Cleaned up API functions.
 Added a self-sorting coin list to show the most profitable coins to mine currently.
