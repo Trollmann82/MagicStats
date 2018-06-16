@@ -1,6 +1,8 @@
 # MagicStats
 Mining Statistics made simple
 
+This currently only works for Gincoin on a few predefined pools (or solo mining!). In the near plans are to rework this to work with a lot more coins and pools by customizable settings.
+
 MagicStats requires Python 3.6 or newer to work. For Linux installation, this will work:
 
 <code>sudo add-apt-repository ppa:deadsnakes/ppa/</code>
