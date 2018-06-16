@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.3.1 by Matz Trollmann    |")
+print("|    MagicStats v0.3.2 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -311,7 +311,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.3.1 by Matz Trollmann    |")
+    print("|    MagicStats v0.3.2 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -326,29 +326,30 @@ while True :
     if poolchoice == 1 or poolchoice == 2:
         print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",fiatlast24h," ",fiatcurr," or ",cryptolast24h," Bitcoin. ","(",cryptolast24hph," BTC/h.)",sep='')
     print("You have", ("%.8f" % ginbalance), gin, "in your wallet at an estimated value of", ("%.8f" % ginbtcwalletvalue), "Bitcoin or", ("%.2f" % ginfiatwalletvalue),fiatcurr,".")
-    print("---------------------------------------------------------------------------------------")
+    print("------------------------------------------------------------------------------------------------------")
     coinlist = [
         ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "24h BTC Volume".ljust(14),
-         "BTC/hour".ljust(12)],
+         "Coins/day".ljust(12),"BTC/hour".ljust(12),],
         ["Gincoin".ljust(20), "{:.3f}".format(ginnethashgh).ljust(13), str("%.8f" % ginfloat).ljust(12),
-         str("%.8f" % ginvolume).ljust(14), str("%.8f" % ginph).ljust(12)],
+         str("%.8f" % ginvolume).ljust(14), str(gindailycoins).ljust(12), str("%.8f" % ginph).ljust(12)],
         ["Infinex".ljust(20), str("%.3f" % ifxnethashgh).ljust(13), str("%.8f" % ifxfloat).ljust(12),
-         str("%.8f" % ifxvolume).ljust(14), str("%.8f" % ifxph).ljust(12)],
+         str("%.8f" % ifxvolume).ljust(14), str(ifxdailycoins).ljust(12), str("%.8f" % ifxph).ljust(12)],
         ["Alpenschilling".ljust(20), "{:.3f}".format(alpsnethashgh).ljust(13), str("%.8f" % alpsfloat).ljust(12),
-         str("%.8f" % alpsvolume).ljust(14), str("%.8f" % alpsph).ljust(12)],
+         str("%.8f" % alpsvolume).ljust(14), str(alpsdailycoins).ljust(12), str("%.8f" % alpsph).ljust(12)],
         ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12),
-         str("%.8f" % crsvolume).ljust(14), str("%.8f" % crsph).ljust(12)],
+         str("%.8f" % crsvolume).ljust(14), str(crsdailycoins).ljust(12), str("%.8f" % crsph).ljust(12)],
         ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12),
-         str("%.8f" % tlrvolume).ljust(14), str("%.8f" % tlrph).ljust(12)],
+         str("%.8f" % tlrvolume).ljust(14), str(tlrdailycoins).ljust(12), str("%.8f" % tlrph).ljust(12)],
         ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12),
-         str("%.8f" % vtlvolume).ljust(14), str("%.8f" % vtlph).ljust(12)],
+         str("%.8f" % vtlvolume).ljust(14), str(vtldailycoins).ljust(12), str("%.8f" % vtlph).ljust(12)],
     ]
-    coinlist.sort(key=lambda item: item[4], reverse=True)
+    coinlist.sort(key=lambda item: item[5], reverse=True)
     for item in coinlist:
         print("|", item[0], "|",
               item[1], "|",
               item[2], "|",
               item[3], "|",
-              item[4], "|")
-    print("---------------------------------------------------------------------------------------")
+              item[4], "|",
+              item[5], "|")
+    print("------------------------------------------------------------------------------------------------------")
     time.sleep(295)
