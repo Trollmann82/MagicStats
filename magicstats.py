@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.3.0 by Matz Trollmann    |")
+print("|    MagicStats v0.3.1 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -121,6 +121,7 @@ while True :
     # Gets API data for fiat currency and sets pool address
     fiatapi = f"https://free.currencyconverterapi.com/api/v5/convert?q=USD_{fiatcurr}&compact=ultra"
     poolurl = f"{pool}{wallet}"
+
     # Gets API data for Gincoin
     cbapi = "https://api.crypto-bridge.org/api/v1/ticker"
     cbresp = requests.get(cbapi)
@@ -157,6 +158,8 @@ while True :
     gindailycoins = round(gindailyprod * ginperchash / 100, 4)
     ginnethashgh = round(ginnethash / gh, 3)
     gin = str("Gincoin")
+    ginbalanceresp = requests.get(f"https://explorer.gincoin.io/ext/getbalance/{wallet}")
+    ginbalance = float(ginbalanceresp.text)
 
     # Infinex Calculations
     ifxnethashresp = requests.get("http://explorer.infinex.info/api/getnetworkhashps")
@@ -262,6 +265,7 @@ while True :
     dailyvtl = round(vtlprice * vtldailycoins, 8)
     vtlph = round(dailyvtl / 24, 8)
 
+
     nethashresp = ginnethashresp
 
     # Calculations from API data from coin block explorer
@@ -296,14 +300,18 @@ while True :
     cryptolast24hph = round(cryptolast24h / 24,8)
     dailyfiat = round(price * gindailycoins * fiat, 2)
     fiatlast24h = round(price * last24h * fiat, 2)
-    #Pause to update data
+    # Wallet Balance
+
+    ginbtcwalletvalue = ginbalance * ginfloat
+    ginfiatwalletvalue = round(price * ginbalance * fiat, 2)
+    # Pause to update data
     time.sleep(5)
     if screenchoice == 1:
         os.system('clear')
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.3.0 by Matz Trollmann    |")
+    print("|    MagicStats v0.3.1 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -317,7 +325,7 @@ while True :
     print("Your hashrate will yield an estimated", gindailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
         print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",fiatlast24h," ",fiatcurr," or ",cryptolast24h," Bitcoin. ","(",cryptolast24hph," BTC/h.)",sep='')
-
+    print("You have", ("%.8f" % ginbalance), gin, "in your wallet at an estimated value of", ("%.8f" % ginbtcwalletvalue), "Bitcoin or", ("%.2f" % ginfiatwalletvalue),fiatcurr,".")
     print("---------------------------------------------------------------------------------------")
     coinlist = [
         ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "24h BTC Volume".ljust(14),
