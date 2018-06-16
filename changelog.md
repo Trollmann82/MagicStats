@@ -1,3 +1,6 @@
+v0.3.1
+Added current wallet balance.
+
 v0.3.0
 Internal variable changes.
 Cleaned up API functions.
