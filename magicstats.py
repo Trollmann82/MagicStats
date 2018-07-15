@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.3.2 by Matz Trollmann    |")
+print("|   MagicStats v0.3.2.1 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -122,7 +122,7 @@ while True :
     fiatapi = f"https://free.currencyconverterapi.com/api/v5/convert?q=USD_{fiatcurr}&compact=ultra"
     poolurl = f"{pool}{wallet}"
 
-    # Gets API data for Gincoin
+    # Gets exchange API data for Gincoin
     cbapi = "https://api.crypto-bridge.org/api/v1/ticker"
     cbresp = requests.get(cbapi)
     cbdata = cbresp.text
@@ -191,12 +191,12 @@ while True :
 
     # Taler Calculations
 
-    tlrnethashresp = requests.get("http://taler-explorer.online/api/getnetworkhashps")
-    tlrnethash = float(tlrnethashresp.text)
-    tlrperchash = round(mining * gh / tlrnethash / 10, 5)
-    tlrdailycoins = round(tlrdailyprod * tlrperchash / 100, 4)
-    tlrnethashgh = round(tlrnethash / gh, 3)
-    tlr = str("Taler")
+    #tlrnethashresp = requests.get("http://taler-explorer.online/api/getnetworkhashps")
+    #tlrnethash = float(tlrnethashresp.text)
+    #tlrperchash = round(mining * gh / tlrnethash / 10, 5)
+    #tlrdailycoins = round(tlrdailyprod * tlrperchash / 100, 4)
+    #tlrnethashgh = round(tlrnethash / gh, 3)
+    #tlr = str("Taler")
 
     # Vertical Calculations
 
@@ -260,8 +260,8 @@ while True :
     # ifdailycrs = round(crsfloat * ifcrsdailycoins, 8)
     crsph = round(dailycrs / 24, 8)
     # ifcrsph = round(ifdailycrs / 24, 8)
-    dailytlr = round(tlrprice * tlrdailycoins, 8)
-    tlrph = round(dailytlr / 24, 8)
+    #dailytlr = round(tlrprice * tlrdailycoins, 8)
+    #tlrph = round(dailytlr / 24, 8)
     dailyvtl = round(vtlprice * vtldailycoins, 8)
     vtlph = round(dailyvtl / 24, 8)
 
@@ -290,16 +290,17 @@ while True :
         parsed = json.loads(data)
         total24htext = parsed['total']
         last24h = round(total24htext,4)
+        cryptolast24h = round(cbfloat * last24h, 8)
+        cryptolast24hph = round(cryptolast24h / 24, 8)
+        fiatlast24h = round(price * last24h * fiat, 2)
     #Average blocks per day
     gindailyblocks = float(round(gindailycoins / ginreward, 4))
     avghours = str(datetime.timedelta(seconds=round(86400 / gindailyblocks)))
     # BTC value calculation
     gindailycrypto = round(cbfloat * gindailycoins, 8)
-    cryptolast24h = round(cbfloat*last24h,8)
     cryptoph = round(gindailycrypto / 24,8)
-    cryptolast24hph = round(cryptolast24h / 24,8)
     dailyfiat = round(price * gindailycoins * fiat, 2)
-    fiatlast24h = round(price * last24h * fiat, 2)
+
     # Wallet Balance
 
     ginbtcwalletvalue = ginbalance * ginfloat
@@ -311,7 +312,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.3.2 by Matz Trollmann    |")
+    print("|   MagicStats v0.3.2.1 by Matz Trollmann   |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -338,8 +339,8 @@ while True :
          str("%.8f" % alpsvolume).ljust(14), str(alpsdailycoins).ljust(12), str("%.8f" % alpsph).ljust(12)],
         ["Criptoreal".ljust(20), "{:.3f}".format(crsnethashgh).ljust(13), str("%.8f" % crsfloat).ljust(12),
          str("%.8f" % crsvolume).ljust(14), str(crsdailycoins).ljust(12), str("%.8f" % crsph).ljust(12)],
-        ["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12),
-         str("%.8f" % tlrvolume).ljust(14), str(tlrdailycoins).ljust(12), str("%.8f" % tlrph).ljust(12)],
+        #["Taler".ljust(20), "{:.3f}".format(tlrnethashgh).ljust(13), str("%.8f" % tlrprice).ljust(12),
+         #str("%.8f" % tlrvolume).ljust(14), str(tlrdailycoins).ljust(12), str("%.8f" % tlrph).ljust(12)],
         ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12),
          str("%.8f" % vtlvolume).ljust(14), str(vtldailycoins).ljust(12), str("%.8f" % vtlph).ljust(12)],
     ]
@@ -350,6 +351,6 @@ while True :
               item[2], "|",
               item[3], "|",
               item[4], "|",
-              item[5], "|")
+              item[5], "|",)
     print("------------------------------------------------------------------------------------------------------")
     time.sleep(295)
