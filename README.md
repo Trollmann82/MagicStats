@@ -1,4 +1,10 @@
-# MagicStats
+|-------------------------------------------|
+|    MagicStats v0.3.4 by Matz Trollmann    |
+|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |
+|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |
+|  Github: https://github.com/Trollmann82/  |
+|-------------------------------------------|
+
 Mining Statistics made simple
 
 This currently only works for Gincoin on a few predefined pools (or solo mining!). In the near plans are to rework this to work with a lot more coins and pools by customizable settings.
