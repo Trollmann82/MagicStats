@@ -1,3 +1,8 @@
+v0.3.4
+
+Added MCT+ to the coin list.
+Increased update timer to 6 minutes (instead of 5) to avoid crashes due to API limitations.
+
 v0.3.3
 
 Added Manocoin to the coin list.
