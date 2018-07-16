@@ -1,7 +1,7 @@
 v0.3.4
 
-Added MCT+ to the coin list.
-Increased update timer to 6 minutes (instead of 5) to avoid crashes due to API limitations.
+Added MCT+ to the coin list.<br>
+Increased update timer to 6 minutes (instead of 5) to avoid crashes due to API limitations.<br>
 
 v0.3.3
 
@@ -17,10 +17,10 @@ Added current wallet balance.
 
 v0.3.0
 
-Internal variable changes.
-Cleaned up API functions.
-Added a self-sorting coin list to show the most profitable coins to mine currently.
-Confused myself many times.
+Internal variable changes.<br>
+Cleaned up API functions.<br>
+Added a self-sorting coin list to show the most profitable coins to mine currently.<br>
+Confused myself many times.<br>
 
 v0.2.2.8
 
