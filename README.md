@@ -1,9 +1,9 @@
-|-------------------------------------------|
-|    MagicStats v0.3.4 by Matz Trollmann    |
-|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |
-|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |
-|  Github: https://github.com/Trollmann82/  |
-|-------------------------------------------|
+|-------------------------------------------|<br>
+|    MagicStats v0.3.4 by Matz Trollmann    |<br>
+|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |<br>
+|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |<br>
+|  Github: https://github.com/Trollmann82/  |<br>
+|-------------------------------------------|<br>
 
 Mining Statistics made simple
 
