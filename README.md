@@ -4,6 +4,8 @@ BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS<br>
 GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29<br>
 Github: https://github.com/Trollmann82/<br>
 
+
+
 Mining Statistics made simple
 
 This currently only works for Gincoin on a few predefined pools (or solo mining!). In the near plans are to rework this to work with a lot more coins and pools by customizable settings.
