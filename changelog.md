@@ -1,3 +1,7 @@
+v0.3.3
+
+Added Manocoin to the coin list.
+
 v0.3.2.2
 
 Fixed Criptoreal block reward after halving.
