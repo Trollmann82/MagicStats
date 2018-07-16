@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.3.3 by Matz Trollmann    |")
+print("|    MagicStats v0.3.4 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -21,6 +21,12 @@ blocktimesec = 120
 block24h = 86400 / blocktimesec
 reward = 10
 dailyprod = block24h * reward
+
+# MCT+ blockchain data
+mctblocktimesec = 60
+mctblock24h = 86400 / mctblocktimesec
+mctreward = 25
+mctdailyprod = mctblock24h * mctreward
 
 # Manocoin blockchain data
 manoblocktimesec = 120
@@ -146,6 +152,12 @@ while True :
             cbmanofloat = float(cbmanoprice)
             break
 
+    for i in cbparsed:
+        if i['id'] == 'MCT_BTC':
+            cbmctprice = (i)['last']
+            cbmctfloat = float(cbmctprice)
+            break
+
     # Gets data for defined coins from CREX24 (address have to be changed to add new coins)
     crexapi = "https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_ALPS,BTC_CRS]"
     crexresp = requests.get(crexapi)
@@ -189,6 +201,14 @@ while True :
     alpsdailycoins = round(alpsdailyprod * alpsperchash / 100, 4)
     alpsnethashgh = round(alpsnethash / gh, 3)
     alps = str("Alpenschilling")
+
+    # MCT+ Calculations
+    mctnethashresp = requests.get("http://explorer.mct.plus/api/getnetworkhashps")
+    mctnethash = float(mctnethashresp.text)
+    mctperchash = round(mining * gh / mctnethash / 10, 5)
+    mctdailycoins = round(mctdailyprod * mctperchash / 100, 4)
+    mctnethashgh = round(mctnethash / gh, 3)
+    mct = str("MCT+")
 
     # Manocoin Calculations
     manonethashresp = requests.get("http://explorer.manocoin.org/api/getnetworkhashps")
@@ -250,6 +270,13 @@ while True :
             manovolume = float(manovolumetext)
             manofloat = float(manoprice)
             break
+    for i in cbparsed:
+        if i['id'] == 'MCT_BTC':
+            mctprice = (i)['last']
+            mctvolumetext = (i)['volume']
+            mctvolume = float(mctvolumetext)
+            mctfloat = float(mctprice)
+            break
 
     # Scrapes CREX24 data
     for i in crexparsed['Tickers']:
@@ -294,6 +321,8 @@ while True :
     vtlph = round(dailyvtl / 24, 8)
     dailymano = round(manofloat * manodailycoins, 8)
     manoph = round(dailymano / 24, 8)
+    dailymct = round(mctfloat * mctdailycoins, 8)
+    mctph = round(dailymct / 24, 8)
 
     nethashresp = ginnethashresp
 
@@ -341,7 +370,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.3.3 by Matz Trollmann    |")
+    print("|    MagicStats v0.3.4 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -374,6 +403,8 @@ while True :
          str("%.8f" % vtlvolume).ljust(14), str(vtldailycoins).ljust(12), str("%.8f" % vtlph).ljust(12)],
         ["Manocoin".ljust(20), "{:.3f}".format(manonethashgh).ljust(13), str("%.8f" % manofloat).ljust(12),
          str("%.8f" % manovolume).ljust(14), str(manodailycoins).ljust(12), str("%.8f" % manoph).ljust(12)],
+        ["MCT+".ljust(20), "{:.3f}".format(mctnethashgh).ljust(13), str("%.8f" % mctfloat).ljust(12),
+         str("%.8f" % mctvolume).ljust(14), str(mctdailycoins).ljust(12), str("%.8f" % mctph).ljust(12)],
     ]
     coinlist.sort(key=lambda item: item[5], reverse=True)
     for item in coinlist:
@@ -384,4 +415,4 @@ while True :
               item[4], "|",
               item[5], "|",)
     print("------------------------------------------------------------------------------------------------------")
-    time.sleep(295)
+    time.sleep(355)
