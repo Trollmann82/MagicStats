@@ -4,7 +4,7 @@ BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS<br>
 GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29<br>
 Github: https://github.com/Trollmann82/<br>
 
-
+<br><br>
 
 Mining Statistics made simple
 
