@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|   MagicStats v0.3.2.2 by Matz Trollmann   |")
+print("|    MagicStats v0.3.3 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -21,6 +21,12 @@ blocktimesec = 120
 block24h = 86400 / blocktimesec
 reward = 10
 dailyprod = block24h * reward
+
+# Manocoin blockchain data
+manoblocktimesec = 120
+manoblock24h = 86400 / manoblocktimesec
+manoreward = 5
+manodailyprod = manoblock24h * manoreward
 
 # Gincoin blockchain data
 ginblocktimesec = 120
@@ -130,9 +136,16 @@ while True :
 
     for i in cbparsed:
         if i['id'] == 'GIN_BTC':
-            cbprice = (i)['last']
-            cbfloat = float(cbprice)
+            cbginprice = (i)['last']
+            cbginfloat = float(cbginprice)
             break
+
+    for i in cbparsed:
+        if i['id'] == 'MANO_BTC':
+            cbmanoprice = (i)['last']
+            cbmanofloat = float(cbmanoprice)
+            break
+
     # Gets data for defined coins from CREX24 (address have to be changed to add new coins)
     crexapi = "https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_ALPS,BTC_CRS]"
     crexresp = requests.get(crexapi)
@@ -176,6 +189,14 @@ while True :
     alpsdailycoins = round(alpsdailyprod * alpsperchash / 100, 4)
     alpsnethashgh = round(alpsnethash / gh, 3)
     alps = str("Alpenschilling")
+
+    # Manocoin Calculations
+    manonethashresp = requests.get("http://explorer.manocoin.org/api/getnetworkhashps")
+    manonethash = float(manonethashresp.text)
+    manoperchash = round(mining * gh / manonethash / 10, 5)
+    manodailycoins = round(manodailyprod * manoperchash / 100, 4)
+    manonethashgh = round(manonethash / gh, 3)
+    mano = str("Manocoin")
 
     # Criptoreal Calculations
     crsnethashresp = requests.get("https://criptoreal.info/api/getnetworkhashps")
@@ -222,6 +243,13 @@ while True :
             ifxvolume = float(ifxvolumetext)
             ifxfloat = float(ifxprice)
             break
+    for i in cbparsed:
+        if i['id'] == 'MANO_BTC':
+            manoprice = (i)['last']
+            manovolumetext = (i)['volume']
+            manovolume = float(manovolumetext)
+            manofloat = float(manoprice)
+            break
 
     # Scrapes CREX24 data
     for i in crexparsed['Tickers']:
@@ -264,7 +292,8 @@ while True :
     #tlrph = round(dailytlr / 24, 8)
     dailyvtl = round(vtlprice * vtldailycoins, 8)
     vtlph = round(dailyvtl / 24, 8)
-
+    dailymano = round(manofloat * manodailycoins, 8)
+    manoph = round(dailymano / 24, 8)
 
     nethashresp = ginnethashresp
 
@@ -297,7 +326,7 @@ while True :
     gindailyblocks = float(round(gindailycoins / ginreward, 4))
     avghours = str(datetime.timedelta(seconds=round(86400 / gindailyblocks)))
     # BTC value calculation
-    gindailycrypto = round(cbfloat * gindailycoins, 8)
+    gindailycrypto = round(cbginfloat * gindailycoins, 8)
     cryptoph = round(gindailycrypto / 24,8)
     dailyfiat = round(price * gindailycoins * fiat, 2)
 
@@ -312,7 +341,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|   MagicStats v0.3.2.2 by Matz Trollmann   |")
+    print("|    MagicStats v0.3.3 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -343,6 +372,8 @@ while True :
          #str("%.8f" % tlrvolume).ljust(14), str(tlrdailycoins).ljust(12), str("%.8f" % tlrph).ljust(12)],
         ["Vertical".ljust(20), "{:.3f}".format(vtlnethashgh).ljust(13), str("%.8f" % vtlprice).ljust(12),
          str("%.8f" % vtlvolume).ljust(14), str(vtldailycoins).ljust(12), str("%.8f" % vtlph).ljust(12)],
+        ["Manocoin".ljust(20), "{:.3f}".format(manonethashgh).ljust(13), str("%.8f" % manofloat).ljust(12),
+         str("%.8f" % manovolume).ljust(14), str(manodailycoins).ljust(12), str("%.8f" % manoph).ljust(12)],
     ]
     coinlist.sort(key=lambda item: item[5], reverse=True)
     for item in coinlist:
