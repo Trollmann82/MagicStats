@@ -43,7 +43,7 @@ alpsdailyprod = alpsblock24h * alpsreward
 # Criptoreal blockchain data
 crsblocktimesec = 114
 crsblock24h = 86400 / crsblocktimesec
-crsreward = 65
+crsreward = 30
 crsdailyprod = crsblock24h * crsreward
 
 # Taler blockchain data
