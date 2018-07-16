@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|   MagicStats v0.3.2.1 by Matz Trollmann   |")
+print("|   MagicStats v0.3.2.2 by Matz Trollmann   |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
