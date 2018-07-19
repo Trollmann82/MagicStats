@@ -1,3 +1,7 @@
+v0.3.5
+
+Removed Alpenschilling, Criptoreal, Taler and Vertical to avoid block explorer related crashes. They're still it to be added for those who want, but commented out.
+
 v0.3.4
 
 Added MCT+ to the coin list.<br>
