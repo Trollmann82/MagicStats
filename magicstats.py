@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.5.0 by Matz Trollmann    |")
+print("|    MagicStats v0.5.1 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -76,17 +76,21 @@ mining = float(input("Input your expected hashrate in MH/s: "))
 wallet = str(input("Input your wallet address here: "))
 
 # Pool choice menu
-print("1 = Angrypool\n"
-    "2 = Bsod\n"
-    "3 = solo mining")
+print("1 = Respawn\n"
+    "2 = Angrypool\n"
+    "3 = Bsod\n"
+    "4 = solo mining")
 poolchoice = int(input("Choose pool: "))
 if poolchoice == 1:
+    pool = f"https://pool.respawn.rocks/api/walletEx?address="
+    poolname = str("mining on Respawn Rocks")
+if poolchoice == 2:
     pool = f"http://angrypool.com/api/walletEx?address="
     poolname = str("mining on Angrypool")
-if poolchoice == 2:
+if poolchoice == 3:
     pool = f"http://api.bsod.pw/api/walletEx?address="
     poolname = str("mining on Bsod")
-if poolchoice == 3:
+if poolchoice == 4:
     pool = str("")
     poolname = str("solo mining")
 
@@ -366,13 +370,16 @@ while True :
     price = parsed["data"]["quotes"]["USD"]["price"]
     today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     # API data from pool
-    if poolchoice == 1 or poolchoice == 2:
+    if poolchoice == 1 or poolchoice == 2 or poolchoice == 3:
         poolresponse = requests.get(poolurl)
         data = poolresponse.text
         parsed = json.loads(data)
         total24htext = parsed['total']
         last24h = round(total24htext,4)
-        cryptolast24h = round(cbfloat * last24h, 8)
+        if coinchoice == 1:
+            cryptolast24h = round(cbginfloat * last24h, 8)
+        if coinchoice == 2:
+            cryptolast24h = round(cbmanofloat * last24h, 8)
         cryptolast24hph = round(cryptolast24h / 24, 8)
         fiatlast24h = round(price * last24h * fiat, 2)
     #Average blocks per day
@@ -397,7 +404,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.5.0 by Matz Trollmann    |")
+    print("|    MagicStats v0.5.1 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -442,4 +449,4 @@ while True :
               item[4], "|",
               item[5], "|",)
     print("------------------------------------------------------------------------------------------------------")
-    time.sleep(595)
+    time.sleep(295)
