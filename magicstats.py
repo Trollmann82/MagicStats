@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.5.1 by Matz Trollmann    |")
+print("|    MagicStats v0.5.2 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -168,24 +168,6 @@ while True :
             cbmctfloat = float(cbmctprice)
             break
 
-    # Gets data for defined coins from CREX24 (address have to be changed to add new coins)
-#    crexapi = "https://api.crex24.com/CryptoExchangeService/BotPublic/ReturnTicker?request=[NamePairs=BTC_ALPS,BTC_CRS]"
- #   crexresp = requests.get(crexapi)
-  #  crexdata = crexresp.text
-   # crexparsed = json.loads(crexdata)
-
-    # Gets Coinstock.me Taler coin data
-#    csapi = "https://coinstock.me//api/v2/tickers/tlrbtc.json"
- #   csresp = requests.get(csapi)
-  #  csdata = csresp.text
-   # csparsed = json.loads(csdata)
-
-    # Gets Graviex coin data
-#    grvapi = "https://graviex.net//api/v2/tickers.json"
- #   grvresp = requests.get(grvapi)
-  #  grvdata = grvresp.text
-   # grvparsed = json.loads(grvdata)
-
     # Gincoin calculations
     ginnethashresp = requests.get("https://explorer.gincoin.io/api/getnetworkhashps")
     ginnethash = float(ginnethashresp.text)
@@ -215,14 +197,6 @@ while True :
     ifxnethashgh = round(ifxnethash / gh, 3)
     ifx = str("Infinex")
 
-#    # Alpenschilling Calculations
-#    alpsnethashresp = requests.get("http://explorer.alpenschilling.cash/api/getnetworkhashps")
-#    alpsnethash = float(alpsnethashresp.text)
-#    alpsperchash = round(mining * gh / alpsnethash / 10, 5)
-#    alpsdailycoins = round(alpsdailyprod * alpsperchash / 100, 4)
-#    alpsnethashgh = round(alpsnethash / gh, 3)
-#    alps = str("Alpenschilling")
-
     # MCT+ Calculations
     mctnethashresp = requests.get("http://explorer.mct.plus/api/getnetworkhashps")
     mctnethash = float(mctnethashresp.text)
@@ -230,36 +204,6 @@ while True :
     mctdailycoins = round(mctdailyprod * mctperchash / 100, 4)
     mctnethashgh = round(mctnethash / gh, 3)
     mct = str("MCT+")
-
-    # Criptoreal Calculations
-#    crsnethashresp = requests.get("https://criptoreal.info/api/getnetworkhashps")
- #   crsnethash = float(crsnethashresp.text)
-    # ifcrsnethash = crsnethash + (mining * mh)
- #   crsperchash = round(mining * gh / crsnethash / 10, 5)
-    # ifcrsperchash = round(mining * gh / ifcrsnethash / 10,5)
-  #  crsdailycoins = round(crsdailyprod * crsperchash / 100, 4)
-    # ifcrsdailycoins = round(crsdailyprod * ifcrsperchash / 100, 4)
-   # crsnethashgh = round(crsnethash / gh, 3)
-    # ifcrsnethashgh = round(ifcrsnethash / gh, 3)
-   # crs = str("Criptoreal")
-
-    # Taler Calculations
-
-    #tlrnethashresp = requests.get("http://taler-explorer.online/api/getnetworkhashps")
-    #tlrnethash = float(tlrnethashresp.text)
-    #tlrperchash = round(mining * gh / tlrnethash / 10, 5)
-    #tlrdailycoins = round(tlrdailyprod * tlrperchash / 100, 4)
-    #tlrnethashgh = round(tlrnethash / gh, 3)
-    #tlr = str("Taler")
-
-    # Vertical Calculations
-
-#    vtlnethashresp = requests.get("https://explorer.vertical.ovh/api/getnetworkhashps")
- #   vtlnethash = float(vtlnethashresp.text)
-  #  vtlperchash = round(mining * gh / vtlnethash / 10, 5)
-   # vtldailycoins = round(vtldailyprod * vtlperchash / 100, 4)
-  #  vtlnethashgh = round(vtlnethash / gh, 3)
-  #  vtl = str("Vertical")
 
     # Scrapes Cryptobridge data
     for i in cbparsed:
@@ -291,47 +235,11 @@ while True :
             mctfloat = float(mctprice)
             break
 
-    # Scrapes CREX24 data
-    #for i in crexparsed['Tickers']:
-     #   if i['PairName'] == "BTC_ALPS":
-      #      alpsprice = (i)['Last']
-       #     alpsvolumetext = (i)['BaseVolume']
-        #    alpsvolume = float(alpsvolumetext)
-         #   alpsfloat = float(alpsprice)
-          #  break
-    #for i in crexparsed['Tickers']:
-     #   if i['PairName'] == "BTC_CRS":
-      #      crsprice = (i)['Last']
-       #     crsvolumetext = (i)['BaseVolume']
-        #    crsvolume = float(crsvolumetext)
-         #   crsfloat = float(crsprice)
-          #  break
-
-    # Scrapes Coinstock.me data
-        #for i in csparsed:
-            #tlrprice = (i)['last']
-            #tlrfloat = float(tlrprice)
-            #break
-    #tlrprice = float(csparsed["ticker"]["last"])
-    #tlrvolume = float(csparsed["ticker"]["volbtc"])
-    #vtlprice = float(grvparsed["vtlbtc"]["ticker"]["last"])
-    #vtlvolume = float(grvparsed["vtlbtc"]["ticker"]["volbtc"])
-
     # Calculates data for list
     dailygin = round(ginfloat * gindailycoins, 8)
     ginph = round(dailygin / 24, 8)
     dailyifx = round(ifxfloat * ifxdailycoins, 8)
     ifxph = round(dailyifx / 24, 8)
-    #dailyalps = round(alpsfloat * alpsdailycoins, 8)
-    #alpsph = round(dailyalps / 24, 8)
-    #dailycrs = round(crsfloat * crsdailycoins, 8)
-    # ifdailycrs = round(crsfloat * ifcrsdailycoins, 8)
-    #crsph = round(dailycrs / 24, 8)
-    # ifcrsph = round(ifdailycrs / 24, 8)
-    #dailytlr = round(tlrprice * tlrdailycoins, 8)
-    #tlrph = round(dailytlr / 24, 8)
-    #dailyvtl = round(vtlprice * vtldailycoins, 8)
-    #vtlph = round(dailyvtl / 24, 8)
     dailymano = round(manofloat * manodailycoins, 8)
     manoph = round(dailymano / 24, 8)
     dailymct = round(mctfloat * mctdailycoins, 8)
@@ -363,12 +271,22 @@ while True :
     fiatdata = fiatresponse.text
     fiatparsed = json.loads(fiatdata)
     fiat = fiatparsed[f"USD_{fiatcurr}"]
+
     # Calculations from API data from Coinmarketcap
-    cmcresponse = requests.get("https://api.coinmarketcap.com/v2/ticker/2773")
-    data = cmcresponse.text
-    parsed = json.loads(data)
-    price = parsed["data"]["quotes"]["USD"]["price"]
+    if coinchoice == 1:
+        cmcresponse = requests.get("https://api.coinmarketcap.com/v2/ticker/2773")
+        data = cmcresponse.text
+        parsed = json.loads(data)
+        price = parsed["data"]["quotes"]["USD"]["price"]
+
+    if coinchoice == 2:
+        cmcresponse = requests.get("https://api.coinmarketcap.com/v2/ticker/1")
+        data = cmcresponse.text
+        parsed = json.loads(data)
+        btcprice = parsed["data"]["quotes"]["USD"]["price"]
+        price = btcprice * manofloat
     today = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
     # API data from pool
     if poolchoice == 1 or poolchoice == 2 or poolchoice == 3:
         poolresponse = requests.get(poolurl)
@@ -404,7 +322,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.5.1 by Matz Trollmann    |")
+    print("|    MagicStats v0.5.2 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
