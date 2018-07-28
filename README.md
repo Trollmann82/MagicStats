@@ -1,5 +1,5 @@
 <br>
-MagicStats v0.5.0 by Matz Trollmann<br>
+MagicStats v0.5.1 by Matz Trollmann<br>
 BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS<br>
 GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29<br>
 Github: https://github.com/Trollmann82/<br>
