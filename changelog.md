@@ -1,3 +1,8 @@
+v0.5.1
+
+Added the Respawn Rocks pool (come mine with us with low latency pretty much anywhere in the world using proxy nodes!).<br>
+Minor fix with a broken float.
+
 v0.5.0
 
 Added functionality for multiple coins in the text block, wallet addresses etc. For now only Manocoin and Gincoin, but adding more coins will be a straight forward process.<br>
