@@ -1,6 +1,7 @@
 v0.5.2
 
-Fixed a serious error in fiat values on Manocoin.
+Fixed a serious error in fiat values on Manocoin.<br>
+Cleaned up some commented out unused currencies.
 
 v0.5.1
 
