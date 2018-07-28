@@ -1,3 +1,7 @@
+v0.5.2
+
+Fixed a serious error in fiat values on Manocoin.
+
 v0.5.1
 
 Added the Respawn Rocks pool (come mine with us with low latency pretty much anywhere in the world using proxy nodes!).<br>
