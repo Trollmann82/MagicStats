@@ -1,3 +1,8 @@
+v0.5.0
+
+Added functionality for multiple coins in the text block, wallet addresses etc. For now only Manocoin and Gincoin, but adding more coins will be a straight forward process.<br>
+Minor code and variable cleanup.
+
 v0.3.5
 
 Removed Alpenschilling, Criptoreal, Taler and Vertical to avoid block explorer related crashes. They're still it to be added for those who want, but commented out.
