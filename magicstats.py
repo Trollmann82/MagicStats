@@ -9,7 +9,7 @@ import os
 os.system('clear')
 print("")
 print("|-------------------------------------------|")
-print("|    MagicStats v0.3.5 by Matz Trollmann    |")
+print("|    MagicStats v0.5.0 by Matz Trollmann    |")
 print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
 print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
 print("|  Github: https://github.com/Trollmann82/  |")
@@ -91,8 +91,14 @@ if poolchoice == 3:
     poolname = str("solo mining")
 
 # Coin choice menu
-#print("1 = Gincoin\n"
-#      "2 = ")
+print("1 = Gincoin\n"
+      "2 = Manocoin")
+coinchoice = int(input("Choose coin: "))
+if coinchoice == 1:
+    coinname = "Gincoin"
+if coinchoice == 2:
+    coinname = "Manocoin"
+
 
 # Screen choice menu
 print("1 = Clear screen on every update (good for tidy information)\n"
@@ -182,9 +188,20 @@ while True :
     ginperchash = round(mining * gh / ginnethash / 10, 5)
     gindailycoins = round(gindailyprod * ginperchash / 100, 4)
     ginnethashgh = round(ginnethash / gh, 3)
-    gin = str("Gincoin")
-    ginbalanceresp = requests.get(f"https://explorer.gincoin.io/ext/getbalance/{wallet}")
-    ginbalance = float(ginbalanceresp.text)
+    if coinchoice == 1:
+        ginbalanceresp = requests.get(f"https://explorer.gincoin.io/ext/getbalance/{wallet}")
+        coinbalance = float(ginbalanceresp.text)
+
+    # Manocoin Calculations
+    manonethashresp = requests.get("http://explorer.manocoin.org/api/getnetworkhashps")
+    manonethash = float(manonethashresp.text)
+    manoperchash = round(mining * gh / manonethash / 10, 5)
+    manodailycoins = round(manodailyprod * manoperchash / 100, 4)
+    manonethashgh = round(manonethash / gh, 3)
+    mano = str("Manocoin")
+    if coinchoice == 2:
+        manobalanceresp = requests.get(f"https://explorer.manocoin.org/ext/getbalance/{wallet}")
+        coinbalance = float(manobalanceresp.text)
 
     # Infinex Calculations
     ifxnethashresp = requests.get("http://explorer.infinex.info/api/getnetworkhashps")
@@ -209,14 +226,6 @@ while True :
     mctdailycoins = round(mctdailyprod * mctperchash / 100, 4)
     mctnethashgh = round(mctnethash / gh, 3)
     mct = str("MCT+")
-
-    # Manocoin Calculations
-    manonethashresp = requests.get("http://explorer.manocoin.org/api/getnetworkhashps")
-    manonethash = float(manonethashresp.text)
-    manoperchash = round(mining * gh / manonethash / 10, 5)
-    manodailycoins = round(manodailyprod * manoperchash / 100, 4)
-    manonethashgh = round(manonethash / gh, 3)
-    mano = str("Manocoin")
 
     # Criptoreal Calculations
 #    crsnethashresp = requests.get("https://criptoreal.info/api/getnetworkhashps")
@@ -324,12 +333,27 @@ while True :
     dailymct = round(mctfloat * mctdailycoins, 8)
     mctph = round(dailymct / 24, 8)
 
-    nethashresp = ginnethashresp
+    if coinchoice == 1:
+        coinnethashresp = ginnethashresp
+        coinperchash = ginperchash
+        coinnethash = ginnethash
+        coindailycoins = gindailycoins
+        coindailyprod = gindailyprod
+        coinreward = ginreward
+        cbcoinfloat = cbginfloat
+    if coinchoice == 2:
+        coinnethashresp = manonethashresp
+        coinperchash = manoperchash
+        coinnethash = manonethash
+        coindailycoins = manodailycoins
+        coindailyprod = manodailyprod
+        coinreward = manoreward
+        cbcoinfloat = cbmanofloat
 
     # Calculations from API data from coin block explorer
-    ginnethash = float(ginnethashresp.text)
-    ginperchash = round(mining * gh / ginnethash / 10,5)
-    gindailycoins = round(gindailyprod * ginperchash / 100, 4)
+    coinnethash = float(coinnethashresp.text)
+    coinperchash = round(mining * gh / coinnethash / 10,5)
+    coindailycoins = round(coindailyprod * coinperchash / 100, 4)
     # Calculations for fiat currency API data
     fiatresponse = requests.get(fiatapi)
     fiatdata = fiatresponse.text
@@ -352,17 +376,20 @@ while True :
         cryptolast24hph = round(cryptolast24h / 24, 8)
         fiatlast24h = round(price * last24h * fiat, 2)
     #Average blocks per day
-    gindailyblocks = float(round(gindailycoins / ginreward, 4))
-    avghours = str(datetime.timedelta(seconds=round(86400 / gindailyblocks)))
+    coindailyblocks = float(round(coindailycoins / coinreward, 4))
+    avghours = str(datetime.timedelta(seconds=round(86400 / coindailyblocks)))
     # BTC value calculation
-    gindailycrypto = round(cbginfloat * gindailycoins, 8)
-    cryptoph = round(gindailycrypto / 24,8)
-    dailyfiat = round(price * gindailycoins * fiat, 2)
+    dailycrypto = round(cbcoinfloat * coindailycoins, 8)
+    cryptoph = round(dailycrypto / 24,8)
+    dailyfiat = round(price * coindailycoins * fiat, 2)
 
     # Wallet Balance
-
-    ginbtcwalletvalue = ginbalance * ginfloat
-    ginfiatwalletvalue = round(price * ginbalance * fiat, 2)
+    if coinchoice == 1:
+        coinbtcwalletvalue = coinbalance * ginfloat
+        coinfiatwalletvalue = round(price * coinbalance * fiat, 2)
+    if coinchoice == 2:
+        coinbtcwalletvalue = coinbalance * manofloat
+        coinfiatwalletvalue = round(price * coinbalance * fiat, 2)
     # Pause to update data
     time.sleep(5)
     if screenchoice == 1:
@@ -370,7 +397,7 @@ while True :
     # Prints data to screen every 5 minutes
     print("")
     print("|-------------------------------------------|")
-    print("|    MagicStats v0.3.5 by Matz Trollmann    |")
+    print("|    MagicStats v0.5.0 by Matz Trollmann    |")
     print("|  BTC: 3PBN9BHxFyjWoXBT1HH4YPDV5UcYBq9YsS  |")
     print("|  GIN: GgpRYX7NchKczJQs4CdE1yKhRSv9U8rL29  |")
     print("|  Github: https://github.com/Trollmann82/  |")
@@ -378,13 +405,13 @@ while True :
     print("")
     print(today)
     print("You are currently ",poolname," on the address ", wallet,".",sep='')
-    print("The current hashrate for",gin,"is",round(ginnethash / gh,4),"GH/s.")
-    print("Your expected hashrate of",mining,"MH/s makes out",ginperchash,"% of the network.")
-    print("Expected daily production is currently ", gindailycoins," ",gin," per day, at an estimated value of ",dailyfiat," ",fiatcurr," or ",gindailycrypto," Bitcoin. ","(",cryptoph," BTC/h.)",sep='')
-    print("Your hashrate will yield an estimated", gindailyblocks, "blocks per day, or create a block every", avghours)
+    print("The current hashrate for",coinname,"is",round(coinnethash / gh,4),"GH/s.")
+    print("Your expected hashrate of",mining,"MH/s makes out",coinperchash,"% of the network.")
+    print("Expected daily production is currently ", coindailycoins," ",coinname," per day, at an estimated value of ",dailyfiat," ",fiatcurr," or ",dailycrypto," Bitcoin. ","(",cryptoph," BTC/h.)",sep='')
+    print("Your hashrate will yield an estimated", coindailyblocks, "blocks per day, or create a block every", avghours)
     if poolchoice == 1 or poolchoice == 2:
-        print("You have mined ",last24h," ",gin," in the last 24 hours for a total value of ",fiatlast24h," ",fiatcurr," or ",cryptolast24h," Bitcoin. ","(",cryptolast24hph," BTC/h.)",sep='')
-    print("You have", ("%.8f" % ginbalance), gin, "in your wallet at an estimated value of", ("%.8f" % ginbtcwalletvalue), "Bitcoin or", ("%.2f" % ginfiatwalletvalue),fiatcurr,".")
+        print("You have mined ",last24h," ",coinname," in the last 24 hours for a total value of ",fiatlast24h," ",fiatcurr," or ",cryptolast24h," Bitcoin. ","(",cryptolast24hph," BTC/h.)",sep='')
+    print("You have", ("%.8f" % coinbalance), coinname, "in your wallet at an estimated value of", ("%.8f" % coinbtcwalletvalue), "Bitcoin or", ("%.2f" % coinfiatwalletvalue),fiatcurr,".")
     print("------------------------------------------------------------------------------------------------------")
     coinlist = [
         ["Coin Name".ljust(20), "Net Hash (GH)".ljust(13), "Coin Price".ljust(12), "24h BTC Volume".ljust(14),
@@ -415,4 +442,4 @@ while True :
               item[4], "|",
               item[5], "|",)
     print("------------------------------------------------------------------------------------------------------")
-    time.sleep(295)
+    time.sleep(595)
